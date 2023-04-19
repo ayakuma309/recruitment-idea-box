@@ -5,7 +5,6 @@ import { auth } from "./firebase";
 import styles from "./App.module.css";
 import Feed from './components/Feed';
 import Auth from './components/Auth';
-import "./App.css";
 
 function App() {
   const user = useSelector(selectUser);
