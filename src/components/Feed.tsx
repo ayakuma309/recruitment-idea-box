@@ -1,8 +1,12 @@
 import React from 'react'
+import AfterLoginHeader from './AfterLoginHeader'
 
 const Feed = () => {
   return (
-    <div>Feed</div>
+    <>
+      <AfterLoginHeader />
+      <div>Feed</div>
+    </>
   )
 }
 
