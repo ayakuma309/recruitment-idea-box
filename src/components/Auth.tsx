@@ -1,8 +1,12 @@
-import React from 'react'
-
-const Auth = () => {
+import React from 'react';
+import Header from './Header';
+//ログイン前
+const Auth:React.FC = () => {
   return (
-    <div>Auth</div>
+    <>
+      <Header />
+      <div>Auth</div>
+    </>
   )
 }
 
