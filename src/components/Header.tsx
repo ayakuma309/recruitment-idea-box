@@ -4,7 +4,7 @@ import { updateUserProfile } from '../features/userSlice';
 import { useDispatch } from 'react-redux';
 
 import styles from './styles/Header.module.css'
-
+import red from '@material-ui/core/colors/red';
 import {
   AppBar,
   Toolbar,
@@ -27,6 +27,7 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
   };
 }
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 const Header:React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  const primary = red[800];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -84,7 +85,7 @@ const Header:React.FC = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: primary }}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             <Box textAlign="left">Sample</Box>

@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Box } from '@material-ui/core';
+import red from '@material-ui/core/colors/red';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,13 +23,14 @@ const useStyles = makeStyles((theme) => ({
 
 const AfterLoginHeader = () => {
   const classes = useStyles();
+  const primary = red[800];
   const handleLogout = () => {
     alert('ログアウトしてもよろしいですか？');
     auth.signOut();
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: primary }}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             <Box textAlign="left">Sample</Box>
