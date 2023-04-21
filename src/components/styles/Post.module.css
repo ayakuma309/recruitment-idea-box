@@ -4,6 +4,11 @@
   font-family: 'M PLUS 1p', sans-serif;
 }
 
+.post_form {
+  display: flex;
+  flex-direction: column;
+}
+
 .post_commentIcon {
   margin-top: 15px;
   color: #333;

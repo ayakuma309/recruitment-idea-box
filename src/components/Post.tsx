@@ -10,7 +10,8 @@ import {
   CardActions,
   CardContent,
   Button,
-  Typography
+  Typography,
+  TextField
 } from '@material-ui/core';
 import PostComment from './PostComment';
 import { db } from '../firebase';
@@ -23,13 +24,6 @@ const useStyles = makeStyles((theme) => ({
     margin: '10px auto',
     boxShadow: '8px -2px 52px -2px #777777',
     borderRadius: '10px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'space-between',
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
   },
   small: {
     width: theme.spacing(3),
@@ -104,15 +98,20 @@ const Post: React.FC<PROPS> = (props) => {
             {props.description}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions style={{display: 'block'}}>
           {user.displayName === props.username ? (
-            <div className={classes.buttons}>
+            <div>
               {isEditing ? (
                 <div>
-                  <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
-                  <input type="text" value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
-                  <Button size="small" onClick={() => updatePost(props.postId)}>更新</Button>
-                  <Button size="small" onClick={() => setIsEditing(false)}>キャンセル</Button>
+                  <h3 className={styles.heading}>
+                    編集
+                  </h3>
+                  <div className={styles.post_form}>
+                    <TextField type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
+                    <TextField type="text" value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
+                    <Button size="small" onClick={() => updatePost(props.postId)}>更新</Button>
+                    <Button size="small" onClick={() => setIsEditing(false)}>キャンセル</Button>
+                  </div>
                 </div>
               ) : (
                 <div>
@@ -122,7 +121,7 @@ const Post: React.FC<PROPS> = (props) => {
               )}
             </div>
           ) : (
-            <div className={classes.buttons}>
+            <div>
               <PostComment postId={props.postId}/>
             </div>
           )}
