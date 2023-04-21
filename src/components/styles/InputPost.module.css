@@ -1,0 +1,34 @@
+.post_form {
+  margin: 40px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.heading{
+  text-align: center;
+  font-family: 'M PLUS 1p', sans-serif;
+}
+
+.post_sendBtn {
+  background-color:  #c62828 !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 800 !important;
+  text-transform: inherit !important;
+  border-radius: 20px !important;
+  width: 80px;
+  height: 40px !important;
+  margin-left: 80% !important;
+}
+.post_sendDisableBtn {
+  background-color: rgb(128, 128, 128) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 900 !important;
+  text-transform: inherit !important;
+  border-radius: 30px !important;
+  width: 80px;
+  height: 40px !important;
+  margin-left: 80% !important;
+  cursor: none !important;
+}

@@ -1,12 +1,63 @@
-import React from 'react'
-import AfterLoginHeader from './AfterLoginHeader'
+import React, { useEffect, useState }  from 'react'
+import { db } from "../firebase";
 
-const Feed = () => {
+import AfterLoginHeader from './AfterLoginHeader'
+import ModalPost from './ModalPost';
+import Post from './Post';
+import styles from './styles/Feed.module.css'
+const Feed:React.FC = () => {
+  const [posts, setPosts] = useState([
+    {
+      id: "",
+      title: "",
+      description: "",
+      timestamp: "",
+      username: "",
+    },
+  ]);
+
+  //firebaseからデータ取り出す
+  useEffect(() => {
+    const unSub = db
+      .collection("posts")
+      .orderBy("timestamp", "desc")
+      //firebaseにデータがあるたびに毎回処理が走るonSnapshotで全データ持ってくる。doc.data()で各データにアクセスできる。
+      .onSnapshot((snapshot) =>
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            title: doc.data().title,
+            description: doc.data().description,
+            timestamp: doc.data().timestamp,
+            username: doc.data().username,
+          }))
+        )
+      );
+    return () => {
+      unSub();
+    };
+  }, []);
   return (
-    <>
+    <div>
       <AfterLoginHeader />
-      <div>Feed</div>
-    </>
+      <ModalPost />
+      <div className={styles.post_index}>
+        {posts[0]?.id && (
+          <>
+            {posts.map((post) => (
+              <Post
+                key={post.id}
+                postId={post.id}
+                title={post.title}
+                description={post.description}
+                timestamp={post.timestamp}
+                username={post.username}
+              />
+            ))}
+          </>
+        )}
+      </div>
+    </div>
   )
 }
 
