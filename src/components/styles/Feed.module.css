@@ -13,3 +13,9 @@
 .post_plus{
   margin-top: 20px;
 }
+
+.post_index{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}

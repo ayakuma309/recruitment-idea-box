@@ -4,6 +4,7 @@ import { db } from "../firebase";
 import AfterLoginHeader from './AfterLoginHeader'
 import ModalPost from './ModalPost';
 import Post from './Post';
+import styles from './styles/Feed.module.css'
 const Feed:React.FC = () => {
   const [posts, setPosts] = useState([
     {
@@ -40,7 +41,7 @@ const Feed:React.FC = () => {
     <div>
       <AfterLoginHeader />
       <ModalPost />
-      <div>
+      <div className={styles.post_index}>
         {posts[0]?.id && (
           <>
             {posts.map((post) => (
