@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AfterLoginHeader = () => {
+const AfterLoginHeader:React.FC = () => {
   const classes = useStyles();
   const primary = red[800];
   const handleLogout = () => {
