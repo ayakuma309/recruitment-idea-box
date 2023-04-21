@@ -4,6 +4,11 @@
   margin: 0 auto;
 }
 
+.heading{
+  text-align: center;
+  font-family: 'M PLUS 1p', sans-serif;
+}
+
 .post_sendBtn {
   background-color:  #c62828 !important;
   border: none !important;
