@@ -13,6 +13,7 @@ import {
   Typography
 } from '@material-ui/core';
 import PostComment from './PostComment';
+import { db } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +46,18 @@ interface PROPS {
   username: string;
 }
 
+
+const deletePost = (postId: string) => {
+  if (window.confirm('削除してもよろしいですか？')) {
+    db.collection('posts').doc(postId).delete()
+    .then(() => {
+    console.log('投稿が削除されました');
+    })
+    .catch(() => {
+    alert('Errorが発生しました');
+    });
+    }
+};
 const Post: React.FC<PROPS> = (props) => {
   const classes = useStyles();
   const user = useSelector(selectUser);
@@ -66,7 +79,7 @@ const Post: React.FC<PROPS> = (props) => {
           {user.displayName === props.username ? (
             <div className={classes.buttons}>
               <Button size="small">編集</Button>
-              <Button size="small">削除</Button>
+              <Button size="small" onClick={()=>deletePost(props.postId)}>削除</Button>
             </div>
           ) :(
           <div className={classes.buttons}>
