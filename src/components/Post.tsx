@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   small: {
     width: theme.spacing(3),
@@ -123,6 +123,12 @@ const Post: React.FC<PROPS> = (props) => {
           </Typography>
         </CardContent>
         <CardActions className={classes.buttons}>
+          {user.displayName === props.username ? (
+            <div>
+              <Button size="small">編集</Button>
+              <Button size="small">削除</Button>
+            </div>
+          ) :(
           <div>
             <Button size="small">いいね</Button>
             <Button
@@ -135,6 +141,7 @@ const Post: React.FC<PROPS> = (props) => {
             {openComments && (
               <>
                 {/* コメント一覧 */}
+                <h3 className={styles.heading}>コメント一覧</h3>
                 {comments.map((com) => (
                   <div key={com.id} className={styles.post_comment}>
 
@@ -169,11 +176,6 @@ const Post: React.FC<PROPS> = (props) => {
               </>
             )}
           </div>
-          {user.displayName === props.username && (
-            <div>
-              <Button size="small">編集</Button>
-              <Button size="small">削除</Button>
-            </div>
           )}
         </CardActions>
       </Card>
