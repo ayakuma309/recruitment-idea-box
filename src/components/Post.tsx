@@ -14,13 +14,17 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     width: '48%',
+    height: '100%',
     margin: '10px auto',
     boxShadow: '8px -2px 52px -2px #777777',
     borderRadius: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'space-between',
   },
   buttons: {
     display: 'flex',
-    justifyContent: 'space-between;',
+    justifyContent: 'space-between',
   }
 });
 
