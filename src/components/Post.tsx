@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "./styles/Post.module.css";
 
 import { useSelector } from 'react-redux';
@@ -46,21 +46,50 @@ interface PROPS {
   username: string;
 }
 
-
-const deletePost = (postId: string) => {
-  if (window.confirm('削除してもよろしいですか？')) {
-    db.collection('posts').doc(postId).delete()
-    .then(() => {
-    console.log('投稿が削除されました');
-    })
-    .catch(() => {
-    alert('Errorが発生しました');
-    });
-    }
-};
 const Post: React.FC<PROPS> = (props) => {
   const classes = useStyles();
   const user = useSelector(selectUser);
+
+  const deletePost = (postId: string) => {
+    if (window.confirm('削除してもよろしいですか？')) {
+      db.collection('posts').doc(postId).delete()
+      .then(() => {
+      console.log('投稿が削除されました');
+      })
+      .catch(() => {
+      alert('Errorが発生しました');
+      });
+      }
+  };
+
+  //編集する
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(props.title);
+  const [editedDescription, setEditedDescription] = useState(props.description);
+
+
+  //編集するにはisEditingをtrueにする
+  const editPost = (postId: string) => {
+    setIsEditing(true);
+    //元の投稿のタイトルと内容を表示する
+    setEditedTitle(props.title);
+    setEditedDescription(props.description);
+  }
+
+  //更新する
+  const updatePost = (postId: string) => {
+    db.collection('posts').doc(postId).update({
+      title: editedTitle,
+      description: editedDescription,
+    })
+    .then(() => {
+      console.log('投稿が更新されました');
+      setIsEditing(false);
+    })
+    .catch(() => {
+      alert('Errorが発生しました');
+    });
+  };
 
   return (
     <>
@@ -78,13 +107,24 @@ const Post: React.FC<PROPS> = (props) => {
         <CardActions>
           {user.displayName === props.username ? (
             <div className={classes.buttons}>
-              <Button size="small">編集</Button>
-              <Button size="small" onClick={()=>deletePost(props.postId)}>削除</Button>
+              {isEditing ? (
+                <div>
+                  <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
+                  <input type="text" value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
+                  <Button size="small" onClick={() => updatePost(props.postId)}>更新</Button>
+                  <Button size="small" onClick={() => setIsEditing(false)}>キャンセル</Button>
+                </div>
+              ) : (
+                <div>
+                  <Button size="small" onClick={() => editPost(props.postId)}>編集</Button>
+                  <Button size="small" onClick={() => deletePost(props.postId)}>削除</Button>
+                </div>
+              )}
             </div>
-          ) :(
-          <div className={classes.buttons}>
-            <PostComment postId={props.postId}/>
-          </div>
+          ) : (
+            <div className={classes.buttons}>
+              <PostComment postId={props.postId}/>
+            </div>
           )}
         </CardActions>
       </Card>
