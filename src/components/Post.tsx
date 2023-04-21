@@ -149,7 +149,7 @@ const Post: React.FC<PROPS> = (props) => {
                     <input
                       className={styles.post_input}
                       type="text"
-                      placeholder="Type new comment..."
+                      placeholder="コメントを投稿する"
                       value={comment}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setComment(e.target.value)
@@ -169,7 +169,12 @@ const Post: React.FC<PROPS> = (props) => {
               </>
             )}
           </div>
-        
+          {user.displayName === props.username && (
+            <div>
+              <Button size="small">編集</Button>
+              <Button size="small">削除</Button>
+            </div>
+          )}
         </CardActions>
       </Card>
     </>
