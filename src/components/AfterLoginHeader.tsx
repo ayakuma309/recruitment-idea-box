@@ -33,7 +33,7 @@ const AfterLoginHeader:React.FC = () => {
       <AppBar position="static" style={{ backgroundColor: primary }}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Box textAlign="left">Sample</Box>
+            <Box textAlign="left">募アイデア箱</Box>
           </Typography>
           <Button color="inherit" onClick={handleLogout}>
             Logout

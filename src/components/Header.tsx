@@ -88,7 +88,7 @@ const Header:React.FC = () => {
       <AppBar position="static" style={{ backgroundColor: primary }}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Box textAlign="left">Sample</Box>
+            <Box textAlign="left">募アイデア箱</Box>
           </Typography>
           <Modal open={openModal} onClose={() => setOpenModal(false)}>
             <div style={getModalStyle()} className={classes.modal}>
