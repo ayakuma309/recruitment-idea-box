@@ -25,7 +25,14 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-const InputPost: React.FC = () => {
+
+
+interface PROPS {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const InputPost: React.FC<PROPS> = (props) => {
+  const { setOpen } = props;
   const user = useSelector(selectUser);
   const classes = useStyles();
   const [title, setTitle] = useState("");
@@ -42,12 +49,14 @@ const InputPost: React.FC = () => {
     });
     setTitle("");
     setDescription("");
+    setOpen(false);
   };
 
   return (
     <div className={classes.paper}>
       <form onSubmit={sendPost}>
         <div className={styles.post_form}>
+          <h1 className={styles.heading}>投稿画面</h1>
           <TextField
             variant="outlined"
             margin="normal"
