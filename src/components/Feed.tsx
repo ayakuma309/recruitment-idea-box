@@ -3,11 +3,12 @@ import { db } from "../firebase";
 
 import AfterLoginHeader from './AfterLoginHeader'
 import ModalPost from './ModalPost';
+import Post from './Post';
 const Feed:React.FC = () => {
   const [posts, setPosts] = useState([
     {
       id: "",
-      text: "",
+      title: "",
       description: "",
       timestamp: "",
       username: "",
@@ -24,7 +25,7 @@ const Feed:React.FC = () => {
         setPosts(
           snapshot.docs.map((doc) => ({
             id: doc.id,
-            text: doc.data().text,
+            title: doc.data().title,
             description: doc.data().description,
             timestamp: doc.data().timestamp,
             username: doc.data().username,
@@ -40,9 +41,20 @@ const Feed:React.FC = () => {
       <AfterLoginHeader />
       <ModalPost />
       <div>
-        {posts.map((post) => (
-          <h3>{post.id}</h3>
-        ))}
+        {posts[0]?.id && (
+          <>
+            {posts.map((post) => (
+              <Post
+                key={post.id}
+                postId={post.id}
+                title={post.title}
+                description={post.description}
+                timestamp={post.timestamp}
+                username={post.username}
+              />
+            ))}
+          </>
+        )}
       </div>
     </div>
   )
