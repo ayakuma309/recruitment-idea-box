@@ -8,6 +8,8 @@ import SendIcon from "@material-ui/icons/Send";
 import { selectUser } from '../features/userSlice';
 import { useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 interface PROPS {
   postId: string;
@@ -70,9 +72,43 @@ const PostComment: React.FC<PROPS> = (props) => {
     setComment("");
   };
 
+
+  //いいねを保存
+  const handleLikeSave = () => {
+    db.collection("posts").doc(props.postId).collection("likes").doc(user.uid).set({
+      username: user.displayName,
+    });
+    setIsLiked(true);
+  }
+  const handleUnlikeSave = () => {
+    db.collection("posts").doc(props.postId).collection("likes").doc(user.uid).delete();
+    setIsLiked(false);
+  }
+  //いいね済みかどうかを判定するためのuseState
+  const [isLiked, setIsLiked] = useState(false);
+  //いいね済みかどうかを判定するuseEffect
+  useEffect(() => {
+    if(user){
+      db.collection("posts")
+      .doc(props.postId)
+      .collection("likes")
+      .doc(user.uid)
+      .onSnapshot((snapshot) => {
+        if (snapshot.exists) {
+          setIsLiked(true);
+        } else {
+          setIsLiked(false);
+        }
+      });
+    }
+  },[props.postId, user]);
+
+
   return (
     <div>
-      <Button size="small">いいね</Button>
+      <Button size="small">
+        {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
+      </Button>
       <Button
         size="small"
         onClick={() => setOpenComments(!openComments)}
