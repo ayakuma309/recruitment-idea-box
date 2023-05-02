@@ -89,9 +89,18 @@ const Post: React.FC<PROPS> = (props) => {
     <>
       <Card className={classes.root}>
         <CardContent>
-          <Typography variant="h5" component="h2">
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Typography variant="h5" component="h2">
+              {props.title}
+            </Typography>
+            <div>
+              <Button size="small" onClick={() => editPost(props.postId)}>編集</Button>
+              <Button size="small" onClick={() => deletePost(props.postId)}>削除</Button>
+            </div>
+          </div>
+          {/* <Typography variant="h5" component="h2">
             {props.title}
-          </Typography>
+          </Typography> */}
           <Typography variant="body2" component="p">
             <span className={styles.post_headerUser}>{props.username}</span>
             <br />
@@ -99,32 +108,23 @@ const Post: React.FC<PROPS> = (props) => {
           </Typography>
         </CardContent>
         <CardActions style={{display: 'block'}}>
-          {user.displayName === props.username ? (
-            <div>
-              {isEditing ? (
-                <div>
-                  <h3 className={styles.heading}>
-                    編集
-                  </h3>
-                  <div className={styles.post_form}>
-                    <TextField type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
-                    <TextField type="text" value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
-                    <Button size="small" onClick={() => updatePost(props.postId)}>更新</Button>
-                    <Button size="small" onClick={() => setIsEditing(false)}>キャンセル</Button>
-                  </div>
+          <div>
+            {isEditing ? (
+              <div>
+                <h3 className={styles.heading}>
+                  編集
+                </h3>
+                <div className={styles.post_form}>
+                  <TextField type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
+                  <TextField type="text" value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
+                  <Button size="small" onClick={() => updatePost(props.postId)}>更新</Button>
+                  <Button size="small" onClick={() => setIsEditing(false)}>キャンセル</Button>
                 </div>
-              ) : (
-                <div>
-                  <Button size="small" onClick={() => editPost(props.postId)}>編集</Button>
-                  <Button size="small" onClick={() => deletePost(props.postId)}>削除</Button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div>
+              </div>
+            ) : (
               <PostComment postId={props.postId}/>
-            </div>
-          )}
+            )}
+          </div>
         </CardActions>
       </Card>
     </>
