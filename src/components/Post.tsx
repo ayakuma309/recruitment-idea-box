@@ -98,9 +98,6 @@ const Post: React.FC<PROPS> = (props) => {
               <Button size="small" onClick={() => deletePost(props.postId)}>削除</Button>
             </div>
           </div>
-          {/* <Typography variant="h5" component="h2">
-            {props.title}
-          </Typography> */}
           <Typography variant="body2" component="p">
             <span className={styles.post_headerUser}>{props.username}</span>
             <br />
