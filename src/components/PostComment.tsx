@@ -37,6 +37,11 @@ const PostComment: React.FC<PROPS> = (props) => {
     },
   ]);
 
+  //いいね済みかどうかを判定するためのuseState
+  const [isLiked, setIsLiked] = useState(false);
+  //いいねをカウントする
+  const [likesCount, setLikesCount] = useState(0);
+
    //コメント一覧取得(postのidに紐づいたコメントを持ってくる)
   useEffect(() => {
     const unSub = db
@@ -84,8 +89,7 @@ const PostComment: React.FC<PROPS> = (props) => {
     db.collection("posts").doc(props.postId).collection("likes").doc(user.uid).delete();
     setIsLiked(false);
   }
-  //いいね済みかどうかを判定するためのuseState
-  const [isLiked, setIsLiked] = useState(false);
+
   //いいね済みかどうかを判定するuseEffect
   useEffect(() => {
     if(user){
@@ -103,11 +107,24 @@ const PostComment: React.FC<PROPS> = (props) => {
     }
   },[props.postId, user]);
 
+  //いいね数をカウント
+  useEffect(() => {
+    const getLikesCount = async () => {
+      const snapshot = await db
+        .collection("posts")
+        .doc(props.postId)
+        .collection("likes")
+        .get(); //いいね数を取得
+      setLikesCount(snapshot.docs.length);
+    };
+    getLikesCount();
+  },[props.postId]);
 
   return (
     <div>
       <Button size="small">
         {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
+        {likesCount}
       </Button>
       <Button
         size="small"
